@@ -1,6 +1,5 @@
 package se.iths.fabian.gatewayagil.service;
 
-import tools.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import se.iths.fabian.gatewayagil.dto.AuthServiceResponse;
 import se.iths.fabian.gatewayagil.dto.LoginResponse;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URI;
@@ -217,5 +217,13 @@ public class GatewayProxyService {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body("Anropet avbröts");
         }
+    }
+
+    public ResponseEntity<String> session(String accessToken) {
+        return forwardGet(
+                authServerUrl,
+                "/auth/me",
+                "Bearer " + accessToken
+        );
     }
 }

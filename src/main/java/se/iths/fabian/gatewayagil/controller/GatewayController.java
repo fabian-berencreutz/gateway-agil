@@ -83,4 +83,9 @@ public class GatewayController {
         }
         return request.getHeader(HttpHeaders.AUTHORIZATION);
     }
+
+    @GetMapping("/auth/me")
+    public ResponseEntity<String> session(@CookieValue(name = "access_token", required = false) String accessToken) {
+        return gatewayProxyService.session(accessToken);
+    }
 }
