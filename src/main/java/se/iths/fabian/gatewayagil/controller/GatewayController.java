@@ -41,6 +41,18 @@ public class GatewayController {
                 request.getHeader(HttpHeaders.CONTENT_TYPE)
         );
     }
+    @PostMapping("/products/stock/increase")
+    public ResponseEntity<String> increaseProductStock(
+            @RequestBody String requestBody,
+            @CookieValue(name = "access_token", required = false) String accessToken,
+            HttpServletRequest request) {
+
+        return gatewayProxyService.increaseProductStock(
+                requestBody,
+                resolveAuthHeader(accessToken, request),
+                request.getHeader(HttpHeaders.CONTENT_TYPE)
+        );
+    }
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity<String> deleteProduct(
